@@ -9,9 +9,18 @@ var server = http.createServer(function(request, response) {
   var property = endpoint.replace(/^\//, '');
 
   if (request.method === 'POST') {
-    // YOUR CODE HERE
+    var link = endpoint.slice(1);
+    if(!globalCounter[link])
+      globalCounter[link] = 0;
+    globalCounter[link]++;
+
+    response.statusCode = 201 
+    response.end()
   } else if (request.method === 'GET') {
-    // YOUR CODE HERE
+    var link = endpoint.slice(1)
+    if(globalCounter[link])
+      response.end(globalCounter[link]+'')
+    response.end()
   } else {
     response.statusCode = 404;
     response.end();

@@ -13,8 +13,28 @@ var getWordCount = function(filePath, callback) {
   });
 };
 
-var getTotalWordCount = function(filePathOne, filePathTwo, callback) {
-  // YOUR CODE HERE
+var getTotalWordCount = function(callback, ...files) {
+  var counter = 0;
+  var words = 0;
+
+  dataCollector = (err, data)=>{
+    if(err) throw err;
+
+    words += data;
+    counter++;
+    if(counter == 2)
+      callback(words)
+
+  }
+
+  files.forEach(file => {
+    getWordCount(file, dataCollector)
+  })
+  
 };
 
 module.exports = getTotalWordCount;
+
+getTotalWordCount(data=>{
+  console.log(data)
+}, './async-word-count/files/fileOne.txt', './async-word-count/files/fileTwo.txt')
